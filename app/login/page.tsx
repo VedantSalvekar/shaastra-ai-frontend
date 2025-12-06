@@ -1,0 +1,77 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+
+export default function LoginPage() {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent) {
+    e.preventDefault();
+
+    if (!email || !password) return;
+
+    setIsSubmitting(true);
+
+    setTimeout(() => {
+      setIsSubmitting(false);
+      router.push("/dashboard");
+    }, 500);
+  }
+
+  return (
+    <div className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
+      <div className="w-full max-w-md rounded-2xl bg-slate-950/80 p-6 shadow-lg shadow-black/40">
+        <h1 className="text-2xl font-semibold mb-2">Log in</h1>
+        <form className="space-y-4" onSubmit={handleSubmit}>
+          <div className="space-y-1">
+            <label className="text-sm text-slate-200" htmlFor="email">
+              Email
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="w-full px-4 py-2 rounded-lg bg-slate-800 border border-slate-700 text-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className="space-y-1">
+            <label className="text-sm text-slate-200" htmlFor="password">
+              Password
+            </label>
+            <input
+              id="password"
+              type="password"
+              className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm outline-none focus:border-emerald-500"
+              placeholder="••••••••"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              autoComplete="current-password"
+            />
+          </div>
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="w-full bg-emerald-500 hover:bg-emerald-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors disabled:opacity-50"
+          >
+            {isSubmitting ? "Logging in..." : "Log In"}
+          </button>
+        </form>
+        <p className="mt-4 text-xs text-slate-400">
+          Don&apos;t have an account?{" "}
+          <a
+            href="/register"
+            className="text-emerald-400 hover:text-emerald-300 underline-offset-2 hover:underline"
+          >
+            Sign up
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+}
