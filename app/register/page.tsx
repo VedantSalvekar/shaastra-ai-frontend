@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { signup, ApiError } from "@/lib/api";
 
 export default function RegisterPage() {
   const [email, setEmail] = useState("");
@@ -26,12 +27,32 @@ export default function RegisterPage() {
       return;
     }
 
+    if (password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
+
     setIsSubmitting(true);
 
-    setTimeout(() => {
+    try {
+      const user = await signup({
+        email,
+        full_name: name || null,
+        password,
+      });
+
+      console.log("Created user:", user);
+      // Redirect to login page after successful registration
+      router.push("/login");
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.detail || err.message);
+      } else {
+        setError("Something went wrong. Please try again.");
+      }
+    } finally {
       setIsSubmitting(false);
-      router.push("/dashboard");
-    }, 700);
+    }
   }
 
   return (
