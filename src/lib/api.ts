@@ -146,3 +146,86 @@ export function clearAuthToken(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(TOKEN_KEY);
 }
+
+export type DocumentStatus = "uploaded" | "indexed" | "failed";
+export type MessageRole = "user" | "assistant" | "system";
+
+export type DocumentRead = {
+  id: string;
+  user_id: number;
+  title: string;
+  doc_type: string;
+  mime_type: string;
+  size_bytes: number;
+  status: DocumentStatus;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ChatSession = {
+  id: string;
+  user_id: number;
+  title: string;
+  created_at: string;
+  updated_at: string;
+};
+
+export type ChatMessage = {
+  id: string;
+  session_id: string;
+  role: MessageRole;
+  content: string;
+  citations: { sources?: unknown[] } | null;
+  created_at: string;
+};
+
+export async function listDocuments(): Promise<DocumentRead[]> {
+  const res = await authenticatedFetch(`${API_BASE_URL}/documents`);
+
+  if (!res.ok) {
+    const detail = await parseErrorDetail(res);
+    throw new ApiError(detail || "Failed to list documents", res.status, detail);
+  }
+
+  return res.json();
+}
+
+export async function listChatSessions(): Promise<ChatSession[]> {
+  const res = await authenticatedFetch(`${API_BASE_URL}/chats`);
+
+  if (!res.ok) {
+    const detail = await parseErrorDetail(res);
+    throw new ApiError(detail || "Failed to list chat sessions", res.status, detail);
+  }
+
+  return res.json();
+}
+
+export async function getChatMessages(sessionId: string): Promise<ChatMessage[]> {
+  const res = await authenticatedFetch(`${API_BASE_URL}/chats/${sessionId}/messages`);
+
+  if (!res.ok) {
+    const detail = await parseErrorDetail(res);
+    throw new ApiError(detail || "Failed to get chat messages", res.status, detail);
+  }
+
+  return res.json();
+}
+
+export type CreateChatSessionPayload = {
+  title?: string;
+};
+
+export async function createChatSession(payload?: CreateChatSessionPayload): Promise<ChatSession> {
+  const res = await authenticatedFetch(`${API_BASE_URL}/chats`, {
+    method: "POST",
+    body: JSON.stringify(payload || {}),
+  });
+
+  if (!res.ok) {
+    const detail = await parseErrorDetail(res);
+    throw new ApiError(detail || "Failed to create chat session", res.status, detail);
+  }
+
+  return res.json();
+}
