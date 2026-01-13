@@ -26,11 +26,9 @@ export default function LoginPage() {
 
     try {
       const response = await login({ email, password });
-      
-      // Save token and update auth context
+
       await authLogin(response.access_token);
-      
-      // Redirect to dashboard
+
       router.push("/dashboard");
     } catch (err) {
       if (err instanceof ApiError) {
@@ -83,9 +81,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {error && (
-            <p className="text-xs text-red-400">{error}</p>
-          )}
+          {error && <p className="text-xs text-red-400">{error}</p>}
 
           <button
             type="submit"
