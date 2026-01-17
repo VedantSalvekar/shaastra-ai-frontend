@@ -170,14 +170,38 @@ export type ChatSession = {
   updated_at: string;
 };
 
+export type CitationType = "legal" | "user_doc";
+
+export type LegalCitation = {
+  type: "legal";
+  title: string;
+  url: string;
+  snippet: string;
+};
+
+export type UserDocCitation = {
+  type: "user_doc";
+  doc_id: string;
+  title: string;
+  snippet: string;
+};
+
+export type Citation = LegalCitation | UserDocCitation;
+
 export type ChatMessage = {
   id: string;
   session_id: string;
   role: MessageRole;
   content: string;
-  citations: { sources?: unknown[] } | null;
+  citations: { sources?: Citation[] } | null;
   created_at: string;
 };
+
+export type SendMessagePayload = {
+  content: string;
+};
+
+export type SendMessageResponse = ChatMessage;
 
 export async function listDocuments(): Promise<DocumentRead[]> {
   const res = await authenticatedFetch(`${API_BASE_URL}/documents`);
@@ -225,6 +249,20 @@ export async function createChatSession(payload?: CreateChatSessionPayload): Pro
   if (!res.ok) {
     const detail = await parseErrorDetail(res);
     throw new ApiError(detail || "Failed to create chat session", res.status, detail);
+  }
+
+  return res.json();
+}
+
+export async function sendMessage(sessionId: string, payload: SendMessagePayload): Promise<SendMessageResponse> {
+  const res = await authenticatedFetch(`${API_BASE_URL}/chats/${sessionId}/messages`, {
+    method: "POST",
+    body: JSON.stringify(payload),
+  });
+
+  if (!res.ok) {
+    const detail = await parseErrorDetail(res);
+    throw new ApiError(detail || "Failed to send message", res.status, detail);
   }
 
   return res.json();
