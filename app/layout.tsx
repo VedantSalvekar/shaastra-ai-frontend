@@ -36,7 +36,7 @@ export default function RootLayout({
             <main className="flex-1 overflow-hidden">{children}</main>
             <footer className="border-t border-slate-900/70 text-xs text-slate-400 shrink-0">
               <div className="max-w-5xl mx-auto px-4 py-4 flex flex-col gap-1 md:flex-row md:items-center md:justify-center">
-                <span>© 2024 Shaastra AI</span>
+                <span>© 2026 Shaastra AI</span>
                 <span className="text-slate-500">
                   Built to clarify Irish admin docs. Not legal advice.
                 </span>
