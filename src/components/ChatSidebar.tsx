@@ -46,11 +46,11 @@ export default function ChatSidebar({ currentSessionId, onSelectSession, onNewCh
   }
 
   return (
-    <div className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col h-full">
-      <div className="p-4 border-b border-slate-800">
+    <div className="w-64 bg-ink-900 border-r border-ink-800 flex flex-col h-full">
+      <div className="p-4 border-b border-ink-800">
         <button
           onClick={onNewChat}
-          className="w-full px-4 py-2 bg-emerald-500 hover:bg-emerald-600 text-slate-950 rounded-lg text-sm font-semibold transition-colors"
+          className="w-full px-4 py-2 bg-leather-500 hover:bg-leather-600 text-ink-50 rounded-lg text-sm font-semibold transition-colors"
         >
           + New Chat
         </button>
@@ -58,23 +58,23 @@ export default function ChatSidebar({ currentSessionId, onSelectSession, onNewCh
 
       <div className="flex-1 overflow-y-auto">
         {loading ? (
-          <div className="p-4 text-sm text-slate-500 text-center">Loading...</div>
+          <div className="p-4 text-sm text-ink-500 text-center">Loading...</div>
         ) : sessions.length === 0 ? (
-          <div className="p-4 text-sm text-slate-500 text-center">No chat history yet</div>
+          <div className="p-4 text-sm text-ink-500 text-center">No chat history yet</div>
         ) : (
           <div className="py-2">
             {sessions.map((session) => (
               <button
                 key={session.id}
                 onClick={() => onSelectSession(session.id)}
-                className={`w-full px-4 py-3 text-left hover:bg-slate-800 transition-colors border-l-2 ${
+                className={`w-full px-4 py-3 text-left hover:bg-ink-800 transition-colors border-l-2 ${
                   currentSessionId === session.id
-                    ? "bg-slate-800 border-emerald-500"
+                    ? "bg-ink-800 border-leather-500"
                     : "border-transparent"
                 }`}
               >
-                <div className="text-sm text-slate-200 truncate mb-1">{session.title}</div>
-                <div className="text-xs text-slate-500">{formatDate(session.updated_at)}</div>
+                <div className="text-sm text-ink-200 truncate mb-1">{session.title}</div>
+                <div className="text-xs text-ink-500">{formatDate(session.updated_at)}</div>
               </button>
             ))}
           </div>

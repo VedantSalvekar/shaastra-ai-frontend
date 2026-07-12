@@ -21,7 +21,7 @@ export default function ProtectedRoute({
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <div className="text-slate-400">Loading...</div>
+        <div className="text-ink-400">Loading...</div>
       </div>
     );
   }

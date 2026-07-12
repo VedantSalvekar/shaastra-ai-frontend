@@ -43,21 +43,21 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-[calc(100vh-80px)] flex items-center justify-center px-4">
-      <div className="w-full max-w-md rounded-2xl bg-slate-950/80 p-6 shadow-lg shadow-black/40 border border-slate-800">
+      <div className="w-full max-w-md rounded-2xl bg-ink-950/80 p-6 shadow-lg shadow-black/40 border border-ink-800">
         <h1 className="text-2xl font-semibold mb-2">Log in</h1>
-        <p className="text-sm text-slate-400 mb-6">
+        <p className="text-sm text-ink-400 mb-6">
           Welcome back! Enter your credentials to continue.
         </p>
 
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div className="space-y-1">
-            <label className="text-sm text-slate-200" htmlFor="email">
+            <label className="text-sm text-ink-200" htmlFor="email">
               Email
             </label>
             <input
               type="email"
               id="email"
-              className="w-full px-4 py-2 rounded-lg bg-slate-900 border border-slate-700 text-slate-100 outline-none focus:border-emerald-500"
+              className="w-full px-4 py-2 rounded-lg bg-ink-900 border border-ink-700 text-ink-100 outline-none focus:border-leather-500"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               autoComplete="email"
@@ -66,13 +66,13 @@ export default function LoginPage() {
           </div>
 
           <div className="space-y-1">
-            <label className="text-sm text-slate-200" htmlFor="password">
+            <label className="text-sm text-ink-200" htmlFor="password">
               Password
             </label>
             <input
               id="password"
               type="password"
-              className="w-full rounded-lg border border-slate-700 bg-slate-900 px-3 py-2 text-sm outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-ink-700 bg-ink-900 px-3 py-2 text-sm outline-none focus:border-leather-500"
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -81,22 +81,22 @@ export default function LoginPage() {
             />
           </div>
 
-          {error && <p className="text-xs text-red-400">{error}</p>}
+          {error && <p className="text-xs text-rust-400">{error}</p>}
 
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full rounded-lg bg-emerald-500 hover:bg-emerald-600 disabled:opacity-60 disabled:cursor-not-allowed px-3 py-2 text-sm font-medium text-slate-950"
+            className="w-full rounded-lg bg-leather-500 hover:bg-leather-600 disabled:opacity-60 disabled:cursor-not-allowed px-3 py-2 text-sm font-medium text-ink-50"
           >
             {isSubmitting ? "Logging in..." : "Log in"}
           </button>
         </form>
 
-        <p className="mt-4 text-xs text-slate-400">
+        <p className="mt-4 text-xs text-ink-400">
           Don&apos;t have an account?{" "}
           <a
             href="/register"
-            className="text-emerald-400 hover:text-emerald-300 underline-offset-2 hover:underline"
+            className="text-leather-400 hover:text-leather-300 underline-offset-2 hover:underline"
           >
             Sign up
           </a>

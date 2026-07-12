@@ -1,8 +1,40 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #162127;
+  --foreground: #e8e1d2;
+}
+
+/* Old-book palette: Chinese Black / Dark Jungle Green / Jet / Coffee / Antique Brass */
+@theme {
+  --color-ink-50: #f6f2e7;
+  --color-ink-100: #e8e1d2;
+  --color-ink-200: #cbc0b0;
+  --color-ink-300: #a89b8d;
+  --color-ink-400: #857a72;
+  --color-ink-500: #665d59;
+  --color-ink-600: #4d4645;
+  --color-ink-700: #3a3534;
+  --color-ink-800: #1e2a2f;
+  --color-ink-900: #162127;
+  --color-ink-950: #0c1519;
+
+  --color-leather-200: #e3c3a8;
+  --color-leather-300: #cf9d7b;
+  --color-leather-400: #966b52;
+  --color-leather-500: #724b39;
+  --color-leather-600: #5c3c2d;
+
+  --color-terracotta-300: #8ab0a4;
+  --color-terracotta-400: #5c8a7d;
+  --color-terracotta-500: #3f6259;
+
+  --color-sage-300: #c7b686;
+  --color-sage-400: #a3905f;
+  --color-sage-500: #7a6a3f;
+
+  --color-rust-400: #b3604a;
+  --color-rust-500: #8a3f2f;
 }
 
 @theme inline {
@@ -10,13 +42,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {

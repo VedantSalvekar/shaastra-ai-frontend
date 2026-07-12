@@ -189,9 +189,9 @@ function DocumentsContent() {
 
   function getStatusBadge(status: string) {
     const styles = {
-      uploaded: "bg-blue-500/20 text-blue-400 border-blue-500/30",
-      indexed: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30",
-      failed: "bg-red-500/20 text-red-400 border-red-500/30",
+      uploaded: "bg-terracotta-500/20 text-terracotta-400 border-terracotta-500/30",
+      indexed: "bg-leather-500/20 text-leather-400 border-leather-500/30",
+      failed: "bg-rust-500/20 text-rust-400 border-rust-500/30",
     };
     
     return (
@@ -220,28 +220,28 @@ function DocumentsContent() {
   return (
     <div className="max-w-6xl mx-auto px-4 py-6">
       <h1 className="text-2xl font-semibold mb-2">Documents</h1>
-      <p className="text-slate-400 mb-6 text-sm">
+      <p className="text-ink-400 mb-6 text-sm">
         Upload and manage your documents. Supported formats: PDF, DOCX, TXT.
       </p>
 
       <div
         className={`rounded-xl border-2 border-dashed p-8 mb-6 transition-colors ${
           isDragging
-            ? "border-emerald-500 bg-emerald-500/5"
-            : "border-slate-700 bg-slate-900/30"
+            ? "border-leather-500 bg-leather-500/5"
+            : "border-ink-700 bg-ink-900/30"
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
       >
         <label className="flex flex-col items-center justify-center gap-3 cursor-pointer">
-          <div className="w-12 h-12 rounded-full bg-slate-800 flex items-center justify-center text-2xl">
+          <div className="w-12 h-12 rounded-full bg-ink-800 flex items-center justify-center text-2xl">
             📄
           </div>
-          <span className="text-sm text-slate-300 font-medium">
+          <span className="text-sm text-ink-300 font-medium">
             Drag & drop files here or click to choose
           </span>
-          <span className="text-xs text-slate-500">
+          <span className="text-xs text-ink-500">
             PDF, DOCX, or TXT files (max 10MB each)
           </span>
           <input
@@ -254,7 +254,7 @@ function DocumentsContent() {
           />
           <button
             type="button"
-            className="mt-2 px-4 py-2 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm transition-colors"
+            className="mt-2 px-4 py-2 rounded-full bg-ink-800 hover:bg-ink-700 text-ink-200 text-sm transition-colors"
             onClick={() => fileInputRef.current?.click()}
           >
             Choose Files
@@ -265,14 +265,14 @@ function DocumentsContent() {
       {files.length > 0 && (
         <div className="space-y-4">
           <div className="flex items-center justify-between">
-            <h2 className="font-medium text-slate-200">
+            <h2 className="font-medium text-ink-200">
               Files ({files.length})
             </h2>
             {hasFilesToUpload && (
               <button
                 onClick={handleUploadAll}
                 disabled={isUploading}
-                className="px-4 py-2 rounded-full bg-emerald-500 hover:bg-emerald-600 disabled:opacity-50 disabled:hover:bg-emerald-500 text-slate-950 text-sm font-semibold transition-colors"
+                className="px-4 py-2 rounded-full bg-leather-500 hover:bg-leather-600 disabled:opacity-50 disabled:hover:bg-leather-500 text-ink-50 text-sm font-semibold transition-colors"
               >
                 {isUploading ? "Uploading..." : "Upload All"}
               </button>
@@ -283,34 +283,34 @@ function DocumentsContent() {
             {files.map((fileUpload, index) => (
               <div
                 key={`${fileUpload.file.name}-${index}`}
-                className="flex items-center gap-3 p-4 rounded-xl bg-slate-900/50 border border-slate-800"
+                className="flex items-center gap-3 p-4 rounded-xl bg-ink-900/50 border border-ink-800"
               >
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-sm text-slate-200 truncate">
+                    <span className="text-sm text-ink-200 truncate">
                       {fileUpload.file.name}
                     </span>
                     {fileUpload.status === "success" && (
-                      <span className="text-xs text-emerald-400">✓</span>
+                      <span className="text-xs text-leather-400">✓</span>
                     )}
                     {fileUpload.status === "error" && (
-                      <span className="text-xs text-red-400">✗</span>
+                      <span className="text-xs text-rust-400">✗</span>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-slate-500">
+                  <div className="flex items-center gap-3 text-xs text-ink-500">
                     <span>
                       {(fileUpload.file.size / 1024).toFixed(1)} KB
                     </span>
                     {fileUpload.status === "uploading" && (
-                      <span className="text-slate-400">Uploading...</span>
+                      <span className="text-ink-400">Uploading...</span>
                     )}
                     {fileUpload.status === "success" && (
-                      <span className="text-emerald-400">
+                      <span className="text-leather-400">
                         Uploaded successfully
                       </span>
                     )}
                     {fileUpload.status === "error" && (
-                      <span className="text-red-400">
+                      <span className="text-rust-400">
                         {fileUpload.error || "Upload failed"}
                       </span>
                     )}
@@ -321,7 +321,7 @@ function DocumentsContent() {
                   {fileUpload.status === "idle" && (
                     <button
                       onClick={() => uploadFile(fileUpload, index)}
-                      className="px-3 py-1 rounded-full bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-400 text-xs font-medium transition-colors"
+                      className="px-3 py-1 rounded-full bg-leather-500/20 hover:bg-leather-500/30 text-leather-400 text-xs font-medium transition-colors"
                     >
                       Upload
                     </button>
@@ -329,7 +329,7 @@ function DocumentsContent() {
                   {fileUpload.status === "error" && (
                     <button
                       onClick={() => handleRetry(index)}
-                      className="px-3 py-1 rounded-full bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium transition-colors"
+                      className="px-3 py-1 rounded-full bg-ink-800 hover:bg-ink-700 text-ink-300 text-xs font-medium transition-colors"
                     >
                       Retry
                     </button>
@@ -337,14 +337,14 @@ function DocumentsContent() {
                   {fileUpload.status !== "uploading" && (
                     <button
                       onClick={() => removeFile(index)}
-                      className="w-6 h-6 rounded-full hover:bg-slate-800 text-slate-500 hover:text-slate-300 text-sm transition-colors flex items-center justify-center"
+                      className="w-6 h-6 rounded-full hover:bg-ink-800 text-ink-500 hover:text-ink-300 text-sm transition-colors flex items-center justify-center"
                       title="Remove file"
                     >
                       ×
                     </button>
                   )}
                   {fileUpload.status === "uploading" && (
-                    <div className="w-5 h-5 border-2 border-emerald-500 border-t-transparent rounded-full animate-spin" />
+                    <div className="w-5 h-5 border-2 border-leather-500 border-t-transparent rounded-full animate-spin" />
                   )}
                 </div>
               </div>
@@ -355,26 +355,26 @@ function DocumentsContent() {
 
       {documents.length > 0 && (
         <div className="mt-8">
-          <h2 className="text-lg font-semibold mb-4 text-slate-200">Uploaded Documents</h2>
+          <h2 className="text-lg font-semibold mb-4 text-ink-200">Uploaded Documents</h2>
           <div className="overflow-x-auto">
             <table className="w-full border-collapse">
               <thead>
-                <tr className="border-b border-slate-700">
-                  <th className="text-left py-3 px-4 text-xs font-medium text-slate-400 uppercase">Title</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-slate-400 uppercase">Type</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-slate-400 uppercase">Status</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-slate-400 uppercase">Size</th>
-                  <th className="text-left py-3 px-4 text-xs font-medium text-slate-400 uppercase">Uploaded</th>
+                <tr className="border-b border-ink-700">
+                  <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Title</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Type</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Status</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Size</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Uploaded</th>
                 </tr>
               </thead>
               <tbody>
                 {documents.map((doc) => (
-                  <tr key={doc.id} className="border-b border-slate-800 hover:bg-slate-900/50">
-                    <td className="py-3 px-4 text-sm text-slate-200">{doc.title}</td>
-                    <td className="py-3 px-4 text-sm text-slate-400">{doc.doc_type}</td>
+                  <tr key={doc.id} className="border-b border-ink-800 hover:bg-ink-900/50">
+                    <td className="py-3 px-4 text-sm text-ink-200">{doc.title}</td>
+                    <td className="py-3 px-4 text-sm text-ink-400">{doc.doc_type}</td>
                     <td className="py-3 px-4">{getStatusBadge(doc.status)}</td>
-                    <td className="py-3 px-4 text-sm text-slate-400">{formatBytes(doc.size_bytes)}</td>
-                    <td className="py-3 px-4 text-sm text-slate-400">{formatDate(doc.created_at)}</td>
+                    <td className="py-3 px-4 text-sm text-ink-400">{formatBytes(doc.size_bytes)}</td>
+                    <td className="py-3 px-4 text-sm text-ink-400">{formatDate(doc.created_at)}</td>
                   </tr>
                 ))}
               </tbody>
@@ -384,7 +384,7 @@ function DocumentsContent() {
       )}
 
       {!loading && documents.length === 0 && files.length === 0 && (
-        <div className="text-center py-12 text-slate-500 text-sm">
+        <div className="text-center py-12 text-ink-500 text-sm">
           No documents uploaded yet. Start by uploading your first document above.
         </div>
       )}
