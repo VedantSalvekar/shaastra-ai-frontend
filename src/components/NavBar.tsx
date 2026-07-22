@@ -16,9 +16,9 @@ export default function NavBar() {
       <nav className="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
         <Link
           href="/"
-          className="inline-flex items-center gap-2 text-lg font-semibold"
+          className="inline-flex items-center gap-2 text-xl font-semibold"
         >
-          <span className="text-leather-400">Shaastra</span>
+          <span className="text-leather-300">Shaastra</span>
           <span className="text-ink-300">AI</span>
         </Link>
         

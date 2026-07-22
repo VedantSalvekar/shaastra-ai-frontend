@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect, type ChangeEvent, type DragEvent } from "react";
-import { authenticatedFetch, ApiError, listDocuments, type DocumentRead } from "@/lib/api";
+import { authenticatedFetch, ApiError, listDocuments, deleteDocument, type DocumentRead } from "@/lib/api";
 import { useAuth } from "@/contexts/AuthContext";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
@@ -19,7 +19,6 @@ type UploadResponse = {
   doc_id: string;
   chunks_indexed: number;
 };
-
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:8000";
 
@@ -28,6 +27,8 @@ function DocumentsContent() {
   const [documents, setDocuments] = useState<DocumentRead[]>([]);
   const [loading, setLoading] = useState(true);
   const [isDragging, setIsDragging] = useState(false);
+  const [deletingDocumentId, setDeletingDocumentId] = useState<string | null>(null);
+  const [deletingDocumentError, setDeletingDocumentError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { user } = useAuth();
 
@@ -179,6 +180,35 @@ function DocumentsContent() {
       }
     }
   }
+  async function handleDeleteDocument(doc: DocumentRead) {
+  const confirmed = window.confirm(
+    `Delete "${doc.title}"? This cannot be undone.`
+  );
+  if (!confirmed) return;
+
+  setDeletingDocumentError(null);
+  setDeletingDocumentId(doc.id);
+
+  try {
+    await deleteDocument(doc.id);
+
+    // Optimistic: remove from UI immediately
+    setDocuments((prev) => prev.filter((d) => d.id !== doc.id));
+  } catch (err) {
+    if (err instanceof ApiError && err.status === 401) return;
+
+    const message =
+      err instanceof ApiError
+        ? err.detail || err.message
+        : "Failed to delete document. Please try again.";
+
+    setDeletingDocumentError(message);
+    // Re-sync in case of partial failure or stale list
+    await loadDocuments();
+  } finally {
+    setDeletingDocumentId(null);
+  }
+}
 
   function handleRetry(index: number) {
     uploadFile(files[index], index);
@@ -365,6 +395,7 @@ function DocumentsContent() {
                   <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Status</th>
                   <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Size</th>
                   <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Uploaded</th>
+                  <th className="text-left py-3 px-4 text-xs font-medium text-ink-400 uppercase">Actions</th>
                 </tr>
               </thead>
               <tbody>
@@ -375,6 +406,16 @@ function DocumentsContent() {
                     <td className="py-3 px-4">{getStatusBadge(doc.status)}</td>
                     <td className="py-3 px-4 text-sm text-ink-400">{formatBytes(doc.size_bytes)}</td>
                     <td className="py-3 px-4 text-sm text-ink-400">{formatDate(doc.created_at)}</td>
+                    <td className="py-3 px-4">
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteDocument(doc)}
+                        disabled={deletingDocumentId === doc.id}
+                        className="px-3 py-1 rounded-full bg-rust-500/20 hover:bg-rust-500/30 disabled:opacity-50 text-rust-400 text-xs font-medium transition-colors"
+                        title="Delete document">
+                          {deletingDocumentId === doc.id ? "Deleting..." : "Delete"}
+                        </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>

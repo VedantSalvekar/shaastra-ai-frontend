@@ -214,6 +214,14 @@ export async function listDocuments(): Promise<DocumentRead[]> {
   return res.json();
 }
 
+export async function deleteDocument(documentId: string): Promise<void> {
+  const res = await authenticatedFetch(`${API_BASE_URL}/user-docs/${encodeURIComponent(documentId)}`,{method: "DELETE"});
+  if (!res.ok) {
+    const detail = await parseErrorDetail(res);
+    throw new ApiError(detail || "Failed to delete document", res.status, detail);
+  }
+}
+
 export async function listChatSessions(): Promise<ChatSession[]> {
   const res = await authenticatedFetch(`${API_BASE_URL}/chats`);
 

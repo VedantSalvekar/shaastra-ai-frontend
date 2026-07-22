@@ -186,14 +186,7 @@ function DashboardContent() {
                                       <span className="px-2 py-0.5 rounded bg-terracotta-500/20 text-terracotta-400 text-xs font-medium">
                                         Legal
                                       </span>
-                                      <span>• {citation.title}</span>
-                                    </div>
-                                    {citation.snippet && (
-                                      <p className="text-ink-400 italic ml-3 text-xs">
-                                        &quot;{citation.snippet}&quot;
-                                      </p>
-                                    )}
-                                    {citation.url && (
+                                      <span>• {citation.title} {citation.url && (
                                       <a
                                         href={citation.url}
                                         target="_blank"
@@ -202,7 +195,23 @@ function DashboardContent() {
                                       >
                                         View official source
                                       </a>
-                                    )}
+                                    )}</span>
+                                    </div>
+                                    {/* {citation.snippet && (
+                                      <p className="text-ink-400 italic ml-3 text-xs">
+                                        &quot;{citation.snippet}&quot;
+                                      </p>
+                                    )} */}
+                                    {/* {citation.url && (
+                                      <a
+                                        href={citation.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        className="text-leather-400 hover:text-leather-300 underline underline-offset-2 ml-3"
+                                      >
+                                        View official source
+                                      </a>
+                                    )} */}
                                   </li>
                                 );
                               } else {
